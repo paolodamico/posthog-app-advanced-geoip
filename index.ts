@@ -57,11 +57,11 @@ const plugin: Plugin<AppInterface> = {
                     event.properties?.$lib
                 }.`
             )
-            if (event.properties?.$set) {
-                event.properties.$set = { ...event.properties.$set, ...defaultLocationSetProps }
+            if (event.$set) {
+                event.$set = { ...event.$set, ...defaultLocationSetProps }
             }
-            if (event.properties?.$set_once) {
-                event.properties.$set_once = { ...event.properties.$set_once, ...defaultLocationSetOnceProps }
+            if (event.$set_once) {
+                event.$set_once = { ...event.$set_once, ...defaultLocationSetOnceProps }
             }
             event.properties = { ...event.properties, ...defaultLocationSetProps }
         }
@@ -80,6 +80,8 @@ const plugin: Plugin<AppInterface> = {
                 )
             }
         }
+
+        console.info(`Finished processing ${event.uuid || event.event}.`)
 
         return event
     },

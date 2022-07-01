@@ -19,6 +19,12 @@ const createGeoIPPageview = (): PluginEvent => {
         ...event.properties,
         $ip: '13.106.122.3',
         $plugins_succeeded: ['GeoIP (8199)', 'Unduplicates (8303)'],
+        $lib: 'posthog-node',
+    }
+    return {
+        ...event,
+        ip: '13.106.122.3',
+        properties,
         $set: {
             $geoip_city_name: 'Ashburn',
             $geoip_country_name: 'United States',
@@ -45,9 +51,34 @@ const createGeoIPPageview = (): PluginEvent => {
             $initial_geoip_subdivision_1_code: 'VA',
             $initial_geoip_subdivision_1_name: 'Virginia',
         },
-        $lib: 'posthog-node',
     }
-    return { ...event, ip: '13.106.122.3', properties }
+}
+
+const helperVerifyGeoIPIsEmpty = (event: PluginEvent): void => {
+    // event properties
+    expect(event!.properties!.$geoip_city_name).toEqual(undefined)
+    expect(event!.properties!.$geoip_country_name).toEqual(undefined)
+    expect(event!.properties!.$geoip_country_code).toEqual(undefined)
+
+    // $set
+    expect(event!.$set!.$geoip_city_name).toEqual(undefined)
+    expect(event!.$set!.$geoip_country_name).toEqual(undefined)
+    expect(event!.$set!.$geoip_country_code).toEqual(undefined)
+    expect(event!.$set!.$geoip_continent_name).toEqual(undefined)
+    expect(event!.$set!.$geoip_continent_code).toEqual(undefined)
+    expect(event!.$set!.$geoip_postal_code).toEqual(undefined)
+    expect(event!.$set!.$geoip_latitude).toEqual(undefined)
+    expect(event!.$set!.$geoip_longitude).toEqual(undefined)
+    expect(event!.$set!.$geoip_time_zone).toEqual(undefined)
+    expect(event!.$set!.$geoip_subdivision_1_code).toEqual(undefined)
+    expect(event!.$set!.$geoip_subdivision_1_name).toEqual(undefined)
+
+    // $set_once
+    expect(event!.$set_once!.$initial_geoip_city_name).toEqual(undefined)
+    expect(event!.$set_once!.$initial_geoip_country_name).toEqual(undefined)
+    expect(event!.$set_once!.$initial_geoip_country_code).toEqual(undefined)
+    expect(event!.$set_once!.$initial_geoip_latitude).toEqual(undefined)
+    expect(event!.$set_once!.$initial_geoip_longitude).toEqual(undefined)
 }
 
 describe('discard IP', () => {
@@ -77,31 +108,7 @@ describe('$lib ignore', () => {
     test('ignores GeoIP from $lib', async () => {
         const meta = resetMeta(defaultMeta) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
-
-        // event properties
-        expect(event?.properties?.$geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$geoip_country_code).toEqual(undefined)
-
-        // $set
-        expect(event?.properties?.$set.$geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_country_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_continent_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_continent_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_postal_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_latitude).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_longitude).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_time_zone).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_subdivision_1_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_subdivision_1_name).toEqual(undefined)
-
-        // $set_once
-        expect(event?.properties?.$set_once.$initial_geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_country_code).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_latitude).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_longitude).toEqual(undefined)
+        helperVerifyGeoIPIsEmpty(event!)
     })
 
     test('ignores GeoIP from $lib CSV', async () => {
@@ -109,31 +116,7 @@ describe('$lib ignore', () => {
             config: { ...defaultMeta.config, discardLibs: 'posthog-ios,posthog-android,posthog-node' },
         }) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
-
-        // event properties
-        expect(event?.properties?.$geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$geoip_country_code).toEqual(undefined)
-
-        // $set
-        expect(event?.properties?.$set.$geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_country_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_continent_name).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_continent_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_postal_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_latitude).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_longitude).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_time_zone).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_subdivision_1_code).toEqual(undefined)
-        expect(event?.properties?.$set.$geoip_subdivision_1_name).toEqual(undefined)
-
-        // $set_once
-        expect(event?.properties?.$set_once.$initial_geoip_city_name).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_country_name).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_country_code).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_latitude).toEqual(undefined)
-        expect(event?.properties?.$set_once.$initial_geoip_longitude).toEqual(undefined)
+        helperVerifyGeoIPIsEmpty(event!)
     })
 
     test('keeps GeoIP if $lib is not on ignore list', async () => {
@@ -142,12 +125,12 @@ describe('$lib ignore', () => {
         // @ts-ignore
         preprocessedEvent.properties.$lib = 'posthog-swift'
         const event = await processEvent(preprocessedEvent, meta)
-        expect(event?.properties?.$set.$geoip_city_name).toEqual('Ashburn')
-        expect(event?.properties?.$set.$geoip_country_name).toEqual('United States')
-        expect(event?.properties?.$set.$geoip_country_code).toEqual('US')
+        expect(event!.$set!.$geoip_city_name).toEqual('Ashburn')
+        expect(event!.$set!.$geoip_country_name).toEqual('United States')
+        expect(event!.$set!.$geoip_country_code).toEqual('US')
 
-        expect(event?.properties?.$set_once.$initial_geoip_city_name).toEqual('Ashburn')
-        expect(event?.properties?.$set_once.$initial_geoip_country_name).toEqual('United States')
-        expect(event?.properties?.$set_once.$initial_geoip_country_code).toEqual('US')
+        expect(event!.$set_once!.$initial_geoip_city_name).toEqual('Ashburn')
+        expect(event!.$set_once!.$initial_geoip_country_name).toEqual('United States')
+        expect(event!.$set_once!.$initial_geoip_country_code).toEqual('US')
     })
 })
