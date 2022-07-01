@@ -38,7 +38,7 @@ const defaultLocationSetOnceProps = {
 
 export interface AppInterface {
     config: {
-        discardIp: boolean
+        discardIp: 'true' | 'false'
         discardLibs: string
     }
 }
@@ -65,7 +65,7 @@ const plugin: Plugin<AppInterface> = {
             }
         }
 
-        if (config.discardIp) {
+        if (config.discardIp === 'true') {
             if (
                 Array.isArray(event.properties?.$plugins_succeeded) &&
                 event.properties?.$plugins_succeeded.find((val: string) => val.toString().match(GEO_IP_PLUGIN))

@@ -7,7 +7,7 @@ const { processEvent } = advancedGeoIpApp as Required<Plugin>
 
 const defaultMeta: advancedGeoIpApp.AppInterface = {
     config: {
-        discardIp: true,
+        discardIp: 'true',
         discardLibs: 'posthog-node',
     },
 }
@@ -58,7 +58,7 @@ describe('discard IP', () => {
         expect(event?.properties?.$ip).toEqual(undefined)
     })
     test('IP is not discarded if not enabled', async () => {
-        const meta = resetMeta({ config: { ...defaultMeta.config, discardIp: false } }) as PluginMeta<Plugin>
+        const meta = resetMeta({ config: { ...defaultMeta.config, discardIp: 'false' } }) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
         expect(event?.ip).toEqual('13.106.122.3')
         expect(event?.properties?.$ip).toEqual('13.106.122.3')
