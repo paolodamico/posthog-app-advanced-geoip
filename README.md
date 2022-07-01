@@ -1,4 +1,4 @@
-<!-- TODO: Add cool logo -->
+<img src="logo.png" alt="Advanced GeoIP logo" width="120px" />
 
 # PostHog Community App: Advanced GeoIP
 
