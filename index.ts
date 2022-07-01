@@ -63,6 +63,7 @@ const plugin: Plugin<AppInterface> = {
             if (event.properties?.$set_once) {
                 event.properties.$set_once = { ...event.properties.$set_once, ...defaultLocationSetOnceProps }
             }
+            event.properties = { ...event.properties, ...defaultLocationSetProps }
         }
 
         if (config.discardIp === 'true') {

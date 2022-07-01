@@ -77,6 +77,13 @@ describe('$lib ignore', () => {
     test('ignores GeoIP from $lib', async () => {
         const meta = resetMeta(defaultMeta) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
+
+        // event properties
+        expect(event?.properties?.$geoip_city_name).toEqual(undefined)
+        expect(event?.properties?.$geoip_country_name).toEqual(undefined)
+        expect(event?.properties?.$geoip_country_code).toEqual(undefined)
+
+        // $set
         expect(event?.properties?.$set.$geoip_city_name).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_country_name).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_country_code).toEqual(undefined)
@@ -89,6 +96,7 @@ describe('$lib ignore', () => {
         expect(event?.properties?.$set.$geoip_subdivision_1_code).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_subdivision_1_name).toEqual(undefined)
 
+        // $set_once
         expect(event?.properties?.$set_once.$initial_geoip_city_name).toEqual(undefined)
         expect(event?.properties?.$set_once.$initial_geoip_country_name).toEqual(undefined)
         expect(event?.properties?.$set_once.$initial_geoip_country_code).toEqual(undefined)
@@ -101,6 +109,13 @@ describe('$lib ignore', () => {
             config: { ...defaultMeta.config, discardLibs: 'posthog-ios,posthog-android,posthog-node' },
         }) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
+
+        // event properties
+        expect(event?.properties?.$geoip_city_name).toEqual(undefined)
+        expect(event?.properties?.$geoip_country_name).toEqual(undefined)
+        expect(event?.properties?.$geoip_country_code).toEqual(undefined)
+
+        // $set
         expect(event?.properties?.$set.$geoip_city_name).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_country_name).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_country_code).toEqual(undefined)
@@ -113,6 +128,7 @@ describe('$lib ignore', () => {
         expect(event?.properties?.$set.$geoip_subdivision_1_code).toEqual(undefined)
         expect(event?.properties?.$set.$geoip_subdivision_1_name).toEqual(undefined)
 
+        // $set_once
         expect(event?.properties?.$set_once.$initial_geoip_city_name).toEqual(undefined)
         expect(event?.properties?.$set_once.$initial_geoip_country_name).toEqual(undefined)
         expect(event?.properties?.$set_once.$initial_geoip_country_code).toEqual(undefined)
