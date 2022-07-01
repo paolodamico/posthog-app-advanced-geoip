@@ -50,11 +50,11 @@ const plugin: Plugin<AppInterface> = {
         const parsedLibs = config.discardLibs?.split(',').map((val) => val.toLowerCase().trim())
         console.info(`Begin processing ${event.uuid || event.event}.`)
 
-        if (parsedLibs && parsedLibs.includes(event.properties?.$lib)) {
+        if (parsedLibs && event.properties?.$lib && parsedLibs.includes(event.properties?.$lib)) {
             // Event comes from a `$lib` that should be ignored
             console.info(
                 `Discarding GeoIP properties from ${event.uuid || event.event} as event comes from ignored $lib: ${
-                    event.properties?.lib
+                    event.properties?.$lib
                 }.`
             )
             if (event.properties?.$set) {
