@@ -36,9 +36,9 @@ const defaultLocationSetOnceProps = {
     $initial_geoip_subdivision_3_name: undefined,
 }
 
-interface AppInterface {
+export interface AppInterface {
     config: {
-        discardIp: boolean
+        discardIp: 'true' | 'false'
         discardLibs: string
     }
 }
@@ -47,25 +47,32 @@ const GEO_IP_PLUGIN = /^GeoIP \(\d+\)$/
 
 const plugin: Plugin<AppInterface> = {
     processEvent: async (event, { config }) => {
-        const parsedLibs = config.discardLibs.split(',').map((val) => val.toLowerCase().trim())
+        const parsedLibs = config.discardLibs?.split(',').map((val) => val.toLowerCase().trim())
         console.info(`Begin processing ${event.uuid || event.event}.`)
 
-        if (parsedLibs.includes(event.properties?.$lib)) {
+        if (parsedLibs && parsedLibs.includes(event.properties?.$lib)) {
             // Event comes from a `$lib` that should be ignored
             console.info(
                 `Discarding GeoIP properties from ${event.uuid || event.event} as event comes from ignored $lib: ${
                     event.properties?.lib
                 }.`
             )
-            event.properties = { ...event.properties, ...defaultLocationSetOnceProps, ...defaultLocationSetProps }
+            if (event.properties?.$set) {
+                event.properties.$set = { ...event.properties.$set, ...defaultLocationSetProps }
+            }
+            if (event.properties?.$set_once) {
+                event.properties.$set_once = { ...event.properties.$set_once, ...defaultLocationSetOnceProps }
+            }
+            event.properties = { ...event.properties, ...defaultLocationSetProps }
         }
 
-        if (config.discardIp) {
+        if (config.discardIp === 'true') {
             if (
                 Array.isArray(event.properties?.$plugins_succeeded) &&
                 event.properties?.$plugins_succeeded.find((val: string) => val.toString().match(GEO_IP_PLUGIN))
             ) {
                 event.properties.$ip = undefined
+                event.ip = null
                 console.info(`IP discarded for event ${event.uuid || event.event}.`)
             } else {
                 console.warn(
