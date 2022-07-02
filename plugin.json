@@ -18,7 +18,7 @@
             "name": "Discard GeoIP for libraries",
             "type": "string",
             "hint": "Comma-separated list of libraries ($lib) for which GeoIP should be ignored (e.g. `posthog-node,posthog-python`)",
-            "required": true
+            "required": false
         }
     ]
 }
