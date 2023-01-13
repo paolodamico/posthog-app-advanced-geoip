@@ -541,14 +541,13 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@maxmind/geoip2-node@^3.0.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@maxmind/geoip2-node/-/geoip2-node-3.4.0.tgz#e0b2dd6e46931cbb84ccb46cbb154a5009e75bcc"
-  integrity sha512-XBB+IJSXQRXXHBvwULZu2nOYAPuC0pc77xw/xkDo0cWkBO/L2rUMr+xKGZwj47mFBEiG6tnTMBzxJajEJTrKAg==
+"@maxmind/geoip2-node@^3.4.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@maxmind/geoip2-node/-/geoip2-node-3.5.0.tgz#f65de05398eddcbab296abd712ea680a2b9e4a1b"
+  integrity sha512-WG2TNxMwDWDOrljLwyZf5bwiEYubaHuICvQRlgz74lE9OZA/z4o+ZT6OisjDBAZh/yRJVNK6mfHqmP5lLlAwsA==
   dependencies:
     camelcase-keys "^7.0.0"
     ip6addr "^0.2.5"
-    lodash.set "^4.3.2"
     maxmind "^4.2.0"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -572,12 +571,12 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@posthog/plugin-scaffold@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@posthog/plugin-scaffold/-/plugin-scaffold-1.2.0.tgz#482415697cd729877f0a91efadfa5f765053d545"
-  integrity sha512-z2LWsMsdRZXiN1wEy0yGE+lL2RaGnDgvVrqqAt2MDXSQ70LUTshYlfzcowWhQcrOvN3f+zyNfQ9S8p3Y9znj+A==
+"@posthog/plugin-scaffold@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@posthog/plugin-scaffold/-/plugin-scaffold-1.4.0.tgz#72bf605f7d3747e6c3f1c0be71a2856a83a6389a"
+  integrity sha512-vDSc0ElMeeZkCGRjfIqkzTYZxeL7dOc0osw4wbQ0gLt0N2Csy4H/gHtoj0qum/b90ge3cGcHyHYIwld804mrfg==
   dependencies:
-    "@maxmind/geoip2-node" "^3.0.0"
+    "@maxmind/geoip2-node" "^3.4.0"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -3312,11 +3311,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash.set@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
-  integrity sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==
 
 lodash.truncate@^4.4.2:
   version "4.4.2"
