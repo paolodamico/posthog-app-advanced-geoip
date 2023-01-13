@@ -14,43 +14,50 @@ const defaultMeta: advancedGeoIpApp.AppInterface = {
 
 const createGeoIPPageview = (): PluginEvent => {
     const event = createPageview()
+
+    const setGeoIPProps = {
+        $geoip_city_name: 'Ashburn',
+        $geoip_country_name: 'United States',
+        $geoip_country_code: 'US',
+        $geoip_continent_name: 'North America',
+        $geoip_continent_code: 'NA',
+        $geoip_postal_code: '20149',
+        $geoip_latitude: 39.0469,
+        $geoip_longitude: -77.4903,
+        $geoip_time_zone: 'America/New_York',
+        $geoip_subdivision_1_code: 'VA',
+        $geoip_subdivision_1_name: 'Virginia',
+    }
+
+    const setOnceGeoIPProps = {
+        $initial_geoip_city_name: 'Ashburn',
+        $initial_geoip_country_name: 'United States',
+        $initial_geoip_country_code: 'US',
+        $initial_geoip_continent_name: 'North America',
+        $initial_geoip_continent_code: 'NA',
+        $initial_geoip_postal_code: '20149',
+        $initial_geoip_latitude: 39.0469,
+        $initial_geoip_longitude: -77.4903,
+        $initial_geoip_time_zone: 'America/New_York',
+        $initial_geoip_subdivision_1_code: 'VA',
+        $initial_geoip_subdivision_1_name: 'Virginia',
+    }
+
     const properties = {
         // @ts-ignore
         ...event.properties,
         $ip: '13.106.122.3',
         $plugins_succeeded: ['GeoIP (8199)', 'Unduplicates (8303)'],
         $lib: 'posthog-node',
+        $set: setGeoIPProps,
+        $set_once: setOnceGeoIPProps,
     }
     return {
         ...event,
         ip: '13.106.122.3',
         properties,
-        $set: {
-            $geoip_city_name: 'Ashburn',
-            $geoip_country_name: 'United States',
-            $geoip_country_code: 'US',
-            $geoip_continent_name: 'North America',
-            $geoip_continent_code: 'NA',
-            $geoip_postal_code: '20149',
-            $geoip_latitude: 39.0469,
-            $geoip_longitude: -77.4903,
-            $geoip_time_zone: 'America/New_York',
-            $geoip_subdivision_1_code: 'VA',
-            $geoip_subdivision_1_name: 'Virginia',
-        },
-        $set_once: {
-            $initial_geoip_city_name: 'Ashburn',
-            $initial_geoip_country_name: 'United States',
-            $initial_geoip_country_code: 'US',
-            $initial_geoip_continent_name: 'North America',
-            $initial_geoip_continent_code: 'NA',
-            $initial_geoip_postal_code: '20149',
-            $initial_geoip_latitude: 39.0469,
-            $initial_geoip_longitude: -77.4903,
-            $initial_geoip_time_zone: 'America/New_York',
-            $initial_geoip_subdivision_1_code: 'VA',
-            $initial_geoip_subdivision_1_name: 'Virginia',
-        },
+        $set: setGeoIPProps,
+        $set_once: setOnceGeoIPProps,
     }
 }
 
@@ -79,6 +86,16 @@ const helperVerifyGeoIPIsEmpty = (event: PluginEvent): void => {
     expect(event!.$set_once!.$initial_geoip_country_code).toEqual(undefined)
     expect(event!.$set_once!.$initial_geoip_latitude).toEqual(undefined)
     expect(event!.$set_once!.$initial_geoip_longitude).toEqual(undefined)
+
+    // $set on event props
+    expect(event!.properties!.$set!.$geoip_city_name).toEqual(undefined)
+    expect(event!.properties!.$set!.$geoip_country_name).toEqual(undefined)
+    expect(event!.properties!.$set!.$geoip_country_code).toEqual(undefined)
+
+    // $set_once on event props
+    expect(event!.properties!.$set_once!.$initial_geoip_city_name).toEqual(undefined)
+    expect(event!.properties!.$set_once!.$initial_geoip_country_name).toEqual(undefined)
+    expect(event!.properties!.$set_once!.$initial_geoip_country_code).toEqual(undefined)
 }
 
 describe('discard IP', () => {

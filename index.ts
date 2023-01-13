@@ -59,9 +59,11 @@ const plugin: Plugin<AppInterface> = {
             )
             if (event.$set) {
                 event.$set = { ...event.$set, ...defaultLocationSetProps }
+                event.properties.$set = { ...event.properties.$set, ...defaultLocationSetProps }
             }
             if (event.$set_once) {
                 event.$set_once = { ...event.$set_once, ...defaultLocationSetOnceProps }
+                event.properties.$set_once = { ...event.properties.$set_once, ...defaultLocationSetOnceProps }
             }
             event.properties = { ...event.properties, ...defaultLocationSetProps }
         }
