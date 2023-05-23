@@ -4,8 +4,9 @@
 
 This app extends functionality for the [GeoIP app](https://github.com/PostHog/posthog-plugin-geoip). This functionality cannot be part of the main GeoIP app as that app is stateless:
 
-1. Enables discarding IP addresses after GeoIP lookup is processed. This is particularly helpful for privacy preservation and compliance. IP addresses are considered PII in several countries.
-2. Enables discarding entire GeoIP information for events that come from certain libraries. For example, you probably don't want to assign locations to users that belong to your server. I've used it to ignore IP address and GeoIP information from my backend.
+1. Enables discarding IP addresses after GeoIP lookup is processed. This is particularly helpful for privacy preservation and compliance. IP addresses are considered personal data in several countries.
+
+> Previously this app enabled discarding IP information from certain libraries (to discard IP data from backend servers), this is now possible natively with PostHog, setting `$geoip_disable = true` in events. Server-side libraries have native support for this, and no additional action is required. See [posthog-node](https://posthog.com/docs/libraries/node) for instance.
 
 ## 🚀 Usage
 
