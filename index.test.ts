@@ -126,6 +126,8 @@ describe('$lib ignore', () => {
         const meta = resetMeta(defaultMeta) as PluginMeta<Plugin>
         const event = await processEvent(createGeoIPPageview(), meta)
         helperVerifyGeoIPIsEmpty(event!)
+        expect(Object.keys(event!.$set!).length).toEqual(0) // Ensure this is not sending properties even as undefined (that overwrites the user properties)
+        expect(Object.keys(event!.$set_once!).length).toEqual(0) // Ensure this is not sending properties even as undefined (that overwrites the user properties)
     })
 
     test('ignores GeoIP from $lib CSV', async () => {
